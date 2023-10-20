@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 @Entity
@@ -24,8 +25,15 @@ public class SessaoVotacao {
 
     private Long duracaoEmSegundos;
 
-    public LocalDateTime getFim(){
-        return inicio.plusSeconds(duracaoEmSegundos);
+    private Duration duracao;
+
+    public SessaoVotacao( Pauta pauta, Duration duracao) {
+        this.pauta = pauta;
+        this.inicio = LocalDateTime.now();
+        this.duracao = duracao;
     }
 
+    public LocalDateTime getFim(){
+        return inicio.plus(duracao);
+    }
 }
